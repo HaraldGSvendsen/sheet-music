@@ -1,26 +1,65 @@
-% LilyBin
 
 % use \transposition key to get correct midi output
 % for transposing instruments
 % use \transpose k1 k2 to get correct printed music
 
-\version "2.18.2"
 \paper { 
 	#(set-default-paper-size "a4" )
 %	system-system-spacing #'padding = #6
 }
 \header {
 	copyright = ""
-	title = "Akersgata"
+	title = "Akersgata - trombone/tuba duett"
 	subtitle = "Eb-dur" %etter transponering
-%	instrument = "euphonium"
-%	instrument = "piano"
 	composer = "Johan Svendsen"
 	arranger = ""
 	poet = "Pegasus"
 	opus = ""
 	piece = ""
 }
+melTromboneC = \relative  {	
+	\key c \major \time 2/4
+	\tempo 4 = 110
+%L1: 1.stemme
+%L2: endre til 2.stemme (tuba 2)
+%L3: 1.stemme
+%L4: 2.stemme (tuba 1)
+	r4 c8 d8 e4 e8 e8 e4 d8 c8 e2
+	r4 d8 e8 f4 f8 f8 f4 e8 d8 f2 \break %L1 1
+    r4 a,8 b8 c4 c8 c8 a4 a8 a8 g2 
+	b4-. b4-.  a4 a8 a8 b4 b8 b8 g2 \break %L2 2
+
+	r4 c8 d8 e4 e8 e8 e4 d8 c8 e2
+	r4 d8 e8 f4 f8 f8 f4 e8 d8 f2 \break %L3 1
+    r4 a,8 b8 c4 c8 c8 a4 a8 a8 g2
+	b4-. b4-.  a4 a8 a8 b4 b8 b8 g2 \break %L4 2
+	r2
+	r4 c8 b8   a4. a8    a4 b8 c8  b4 b8 r8 
+	r4 g8 g8   a4 a8 a8  a4 g8 f8  e4 r4 \break %L5 1
+	r4 c'8 b8  a4 a4    a4 b8 c8  b4 b8 r8 
+	r4 r8 g8   a4 c8 c8  c4 a8 c8  f2 %L6 1
+    r4 d8 f8   a2 
+}
+
+melTubaC = \relative c' {
+	\key c \major \time 2/4
+    r4 a8 b8 c4 c8 c8 a4 a8 a8 g2 
+    d'4-. d4-. c4 c8 c8 a4 a8 a8 a2 \break %L1 2       
+	r4 c'8 d8 e4 e8 e8 e4 d8 c8 e2
+	r4 b8 c8 d4 d8 d8 d4 c8 b8 c2 \break %L2 1
+	
+    r4 a,8 b8 c4 c8 c8 a4 a8 a8 g2  
+    d'4-. d4-. c4 c8 c8 a4 a8 a8 a2 \break %L3 2
+	r4 c'8 d8 e4 e8 e8 e4 d8 c8 e2
+	r4 b8 c8 d4 d8 d8 d4 c8 b8 c2 \break %L4 1
+	f,4-. f4-. %r2 %fyllinnpause r4 
+	c4   c8 c8   a4. a8    a4 a8 a8  b4 b8 r8 %fylinnpause
+	b4-. b4-.    a4 a8 a8  a4 a8 a8  g4 g4-. \break %L5 2
+	g4-. b8 b8  c4 c4    a4 a8 a8  b4 b8 r8 % fyllinnpause
+	b4-. b4-.   c4 c8 c8  c4 a8 a8  a2 %L6 2
+    a4-. d4-. f,2 
+	}
+
 melodiC = \relative c' {
 	\key c \major \time 2/4
 	\tempo 4 = 110
@@ -91,21 +130,6 @@ besifringCsimpel = \chords {
 	a:m f f g g d:m f d:m 
     d:m g 
 }
-
-besifringC = {\chordmode { 
-    %\clef treble 
-	\key c \major \time 2/4
-	\skip2 
-       c2 a:m/c c d:m f/c d:m f/c
-	a:m/c c a:m/c c g/b d:m g/b c
-	a:m/c c a:m/c c d:m f/c d:m f/c
-	a:m/c c a:m/c c g/b d:m g/b c
-	a:m/c 
-	%refr:
-	f/c a:m/c f/c g/b g/b d:m f/c e:m/b 
-	a:m/c f/c f/c g/b g/b d:m f/c d:m 
-    d:m g/b g4/b c4 c2
-}}
 % for Trombone - Freya:
 bassC = \relative c' { \key c \major \time 2/4
 %bytt ut F med A (ters)
@@ -275,52 +299,44 @@ sangRef = \lyricmode
 
 
 	\new Staff=trombone
-		\with {instrumentName=#"Trombone 1" 
-            shortInstrumentName=#"Tbn 1"	
+		\with {instrumentName=#"Trombone" 
+            shortInstrumentName=#"Tro"	
             midiMinimumVolume = #0.5 
-            midiMaximumVolume = #1.0 
+            midiMaximumVolume = #0.7 
             midiInstrument = #"trombone"} 
-      {\clef F \transpose c' c  \melodiC}
-	\new Staff=tubaA
-		\with {instrumentName=#"Tuba 1" 
-            shortInstrumentName=#"Tba 1"	
-			midiMinimumVolume = #0.5
-			midiMaximumVolume = #1.0 
-			midiInstrument = #"tuba"} 
-		{\clef F \transpose c'' c  \melodiC}
+      {\clef F \transpose c c  \melTromboneC}
 	\new Staff=tuba
-		\with {instrumentName=#"Tuba 2" 
-            shortInstrumentName=#"Tba 2"	
-			midiMinimumVolume = #0.5
+		\with {instrumentName=#"Tuba" 
+            shortInstrumentName=#"Tub"	
+			midiMinimumVolume = #0.7
 			midiMaximumVolume = #1.0 
 			midiInstrument = #"tuba"} 
 		{\clef F %\transposition ees \transpose ees, c 
-    \transpose c' c,  \melodiToC}
-\new Lyrics \lyricsto "vers" \sang 
-\new Lyrics \lyricsto "refr" \sangRef
-%
-%	\new Staff=saxA
-%		\with {instrumentName=#"Saxofon 1" 
-%			shortInstrumentName=#"Sax.1"
-%			midiInstrument=#"alto sax"
-%            midiMinimumVolume = #0.0
-%			midiMaximumVolume = #0.7 
-%            } 
-%		{\transposition ees \transpose ees, c \melodiC}
-%	\new Staff=saxB
-%		\with {instrumentName=#"Saxofon 2" 
-%			shortInstrumentName=#"Sax.2"
-%			midiInstrument=#"alto sax" 
-%			midiMinimumVolume = #0.0
-%			midiMaximumVolume = #0.6 
-%			}
-%		{\transposition ees \transpose ees, c \melodiToC }%\harmMC}
-%
+    \transpose c' c,  \melTubaC}
 %	\new Staff=trombone
-%		\with {instrumentName=#"Trombone" 
-%        shortInstrumentName=#"Tromb."
-%		midiInstrument=#"trombone"} 
-%		{\clef F \transpose c' c \bassC}
+%		\with {instrumentName=#"Trombone 1" 
+%            shortInstrumentName=#"Tbn 1"	
+%            midiMinimumVolume = #0.5 
+%            midiMaximumVolume = #1.0 
+%            midiInstrument = #"trombone"} 
+%      {\clef F \transpose c' c  \melodiC}
+%	\new Staff=tubaA
+%		\with {instrumentName=#"Tuba 1" 
+%            shortInstrumentName=#"Tba 1"	
+%			midiMinimumVolume = #0.5
+%			midiMaximumVolume = #1.0 
+%			midiInstrument = #"tuba"} 
+%		{\clef F \transpose c'' c  \melodiC}
+%	\new Staff=tuba
+%		\with {instrumentName=#"Tuba 2" 
+%            shortInstrumentName=#"Tba 2"	
+%			midiMinimumVolume = #0.5
+%			midiMaximumVolume = #1.0 
+%			midiInstrument = #"tuba"} 
+%		{\clef F %\transposition ees \transpose ees, c 
+%    \transpose c' c,  \melodiToC}
+%\new Lyrics \lyricsto "vers" \sang 
+%\new Lyrics \lyricsto "refr" \sangRef
 >>
 \layout {}
 \midi { }
